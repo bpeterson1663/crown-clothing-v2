@@ -1,4 +1,5 @@
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, FormEvent } from 'react'
+import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils'
 
 const defaultFormFields = {
     displayName: '',
@@ -16,8 +17,30 @@ export default function SignUpForm () {
         setFormFields({...formFields, [name]: value})
     }
 
-    const handleSubmit = () => {
+    const resetFormFields = () => {
+        setFormFields({...defaultFormFields})
+    }
 
+    const handleSubmit =  async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+
+        if (password !== confirmPassword) {
+            alert("passwords do not match")
+            return
+        }
+        
+        try {
+            const { user } = await createAuthUserWithEmailAndPassword(email, password)
+            await createUserDocumentFromAuth (user, { displayName })
+            resetFormFields()
+            
+        } catch (error: any) {
+            if (error.code === "auth/email-already-in-use") {
+                alert("email address already in use")
+                return
+            }
+            console.error(error)
+        }
     }
 
     return (
