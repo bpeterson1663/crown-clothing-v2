@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils'
+import { FormInput } from '../form-input/form-input.component'
 
 const defaultFormFields = {
     displayName: '',
@@ -47,17 +48,41 @@ export default function SignUpForm () {
         <div>
             <h1>Sign up with your email and password</h1>
             <form onSubmit={handleSubmit}>
-                <label>Display Name</label>
-                <input required type="text" onChange={handleInputChange} name="displayName" value={displayName} />
+                <FormInput 
+                    label="Display Name"
+                    type="text" 
+                    onChange={handleInputChange} 
+                    name="displayName" 
+                    value={displayName}
+                    requred
+                />
 
-                <label>Email</label>
-                <input required type="email" onChange={handleInputChange} name="email" value={email} />
+                <FormInput 
+                    label="Email"
+                    type="email" 
+                    onChange={handleInputChange} 
+                    name="email" 
+                    value={email}
+                    requred
+                />
 
-                <label>Password</label>
-                <input required type="password" onChange={handleInputChange} name="password" value={password} />
+                <FormInput 
+                    label="Passowrd"
+                    type="password" 
+                    onChange={handleInputChange} 
+                    name="password" 
+                    value={password}
+                    requred
+                />
 
-                <label>Confirm Password</label>
-                <input required type="password" onChange={handleInputChange} name="confirmPassword" value={confirmPassword}/>
+                <FormInput 
+                    label="Confirm Password"
+                    type="password" 
+                    onChange={handleInputChange} 
+                    name="confirmPassword" 
+                    value={confirmPassword}
+                    requred
+                />
 
                 <button type="submit">Submit</button>
             </form>
